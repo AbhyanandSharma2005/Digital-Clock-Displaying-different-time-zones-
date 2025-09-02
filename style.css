@@ -9,12 +9,10 @@
   --fav: #ffd700;
   --light: #f8f9fa;
   --dark: #191d34;
-  --glow: #0fffc1cc;
   --font-main: 'Fira Mono', 'Segoe UI', Arial, sans-serif;
   --font-clock: 'Orbitron', 'Fira Mono', monospace;
   --border-radius: 16px;
 }
-
 body[data-theme="dark"] {
   --main-bg: #191d34;
   --panel-bg: #23263a;
@@ -22,7 +20,6 @@ body[data-theme="dark"] {
   --primary: #7fd9fc;
   --secondary: #a88ffc;
   --accent: #fc5c9c;
-  --glow: #7fd9fc;
 }
 body[data-theme="light"] {
   --main-bg: #f8f9fa;
@@ -31,10 +28,8 @@ body[data-theme="light"] {
   --primary: #0f6eae;
   --secondary: #a8c8fc;
   --accent: #fc5c9c;
-  --glow: #0f6eae;
   color: #191d34;
 }
-
 body {
   font-family: var(--font-main);
   background: var(--main-bg);
@@ -63,7 +58,6 @@ body::before {
   0% { transform: rotate(0deg) scale(1);}
   100% { transform: rotate(16deg) scale(1.13);}
 }
-/* Header */
 .headerbar {
   display: flex;
   align-items: center;
@@ -77,7 +71,7 @@ body::before {
   margin: 0;
   font-family: var(--font-clock);
   color: var(--primary);
-  text-shadow: 0 0 18px var(--glow), 0 0 8px var(--accent);
+  text-shadow: 0 0 18px var(--primary), 0 0 8px var(--accent);
   font-size: 2.1rem;
   letter-spacing: 2px;
   user-select: none;
@@ -127,7 +121,7 @@ body::before {
   color: var(--primary);
   min-width: 220px;
 }
-#add-clock-btn, #meeting-btn {
+#add-clock-btn, #meeting-btn, #export-btn, #import-btn {
   padding: 7px 16px;
   border-radius: 8px;
   border: none;
@@ -141,7 +135,7 @@ body::before {
   text-shadow: 0 0 8px var(--accent)77;
   transition: background 0.18s, transform 0.18s;
 }
-#add-clock-btn:hover, #meeting-btn:hover {
+#add-clock-btn:hover, #meeting-btn:hover, #export-btn:hover, #import-btn:hover {
   background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
   color: #fff;
   box-shadow: 0 0 16px var(--accent)99, 0 0 28px var(--primary)99;
@@ -160,7 +154,6 @@ body::before {
   font-size: 1.01rem;
   color: var(--fav);
 }
-#favorites span { color: var(--fav); font-size: 1rem;}
 #favorites {
   display: flex;
   gap: 5px;
@@ -204,7 +197,6 @@ body::before {
   opacity: 0;
   transform: translateY(40px) scale(0.97);
   animation: fadeInNeonUp 0.62s cubic-bezier(.27,.83,.42,1.04) forwards;
-  animation-delay: 0.07s;
   transition: box-shadow 0.24s, background 0.2s;
   border: 1.7px solid var(--secondary);
   overflow: hidden;
@@ -223,30 +215,10 @@ body::before {
     transform: translateY(40px) scale(0.97);
     filter: blur(6px) brightness(0.5);
   }
-  80% {
-    opacity: 1;
-    filter: blur(0) brightness(1.05);
-    transform: translateY(-8px) scale(1.05);
-  }
   100% {
     opacity: 1;
     filter: blur(0) brightness(1);
     transform: translateY(0) scale(1);
-  }
-}
-.clock-card.removing {
-  animation: fadeOutNeonDown 0.43s cubic-bezier(.27,.83,.42,1.04) forwards;
-}
-@keyframes fadeOutNeonDown {
-  0% {
-    opacity: 1;
-    filter: blur(0) brightness(1);
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    opacity: 0;
-    filter: blur(9px) brightness(0.6);
-    transform: translateY(50px) scale(0.91);
   }
 }
 .clock-header {
@@ -279,7 +251,7 @@ body::before {
 .flag {
   font-size: 1.3rem;
   margin-right: 5px;
-  filter: drop-shadow(0 0 2px var(--glow));
+  filter: drop-shadow(0 0 2px var(--primary));
 }
 .day-indicator {
   font-size: 1.1rem;
@@ -315,7 +287,6 @@ body::before {
     0 0 16px var(--primary)bb,
     0 0 7px var(--accent)cc,
     0 0 2px var(--primary);
-  transition: color 0.26s, text-shadow 0.18s;
   filter: drop-shadow(0 0 8px var(--primary));
   animation: glowPulse 2.2s infinite cubic-bezier(.5,0,.5,1);
 }
@@ -438,6 +409,13 @@ dialog[open] {
   padding: 6px 14px;
   margin-right: 7px;
   font-family: var(--font-main);
+}
+#export-btn, #import-btn {
+  font-size: 0.98rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  box-shadow: 0 1px 8px var(--accent)33;
 }
 @media (max-width: 900px) {
   .clocks-container {
