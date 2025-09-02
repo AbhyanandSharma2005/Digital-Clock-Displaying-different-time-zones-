@@ -38,7 +38,7 @@ addBtn.addEventListener('click', () => {
     // Animate the card to draw attention
     const card = document.getElementById('clock-' + tz.replace(/\W/g, ''));
     if (card) {
-      card.animate([{boxShadow: '0 0 0px #e57373'},{boxShadow: '0 0 24px 4px #e57373'},{boxShadow: '0 0 0px #e57373'}], {duration: 900});
+      card.animate([{boxShadow: '0 0 0px #e100ff'},{boxShadow: '0 0 28px 5px #e100ff'},{boxShadow: '0 0 0px #e100ff'}], {duration: 900});
     }
     return;
   }
