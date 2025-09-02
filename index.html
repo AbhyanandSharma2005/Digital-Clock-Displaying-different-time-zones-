@@ -27,20 +27,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>🌐 Neon World Time Zone Clock</title>
+  <title>Neon World Time Zone Clock (Pro)</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://em-content.zobj.net/thumbs/120/twitter/322/glowing-star_1f31f.png">
 </head>
 <body>
-  <div class="bg-animated"></div>
-  <h1><span>🌐</span> Neon World Time Zone Clocks</h1>
-  <div class="control-panel">
+  <nav class="headerbar">
+    <h1>🌐 Neon World Time Zone Clock</h1>
+    <div class="toolbar">
+      <label>
+        <input type="checkbox" id="toggle-12h">
+        12h
+      </label>
+      <select id="theme-select">
+        <option value="neon">Neon</option>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </div>
+  </nav>
+  <section class="control-panel">
+    <input type="text" id="zone-search" placeholder="Search time zones...">
     <select id="timezone-select"></select>
     <button id="add-clock-btn">Add Clock</button>
-  </div>
+    <button id="meeting-btn">Meeting Planner</button>
+  </section>
+  <section id="favorites-section">
+    <span>⭐ Favorites:</span>
+    <div id="favorites"></div>
+  </section>
   <div id="clocks-container" class="clocks-container"></div>
+  <dialog id="meeting-dialog">
+    <form method="dialog">
+      <h2>Meeting Planner</h2>
+      <div id="meeting-timezones"></div>
+      <label>
+        Reference time:
+        <input type="datetime-local" id="meeting-ref" required>
+      </label>
+      <button id="plan-meeting">Plan</button>
+      <div id="meeting-results"></div>
+      <button type="submit">Close</button>
+    </form>
+  </dialog>
+  <dialog id="label-dialog">
+    <form method="dialog">
+      <h3>Custom Clock Label</h3>
+      <input type="text" id="custom-label" maxlength="24" autocomplete="off">
+      <button id="save-label">Save</button>
+      <button type="submit">Cancel</button>
+    </form>
+  </dialog>
   <footer>
-    <p>Powered by <a href="https://www.iana.org/time-zones" target="_blank">IANA Time Zones</a> | Copilot Demo</p>
+    <p>
+      Powered by <a href="https://www.iana.org/time-zones" target="_blank">IANA</a> &middot;
+      <a href="https://open-meteo.com/en/docs" target="_blank">Weather: Open-Meteo</a> &middot;
+      <span id="copyright"></span>
+    </p>
   </footer>
   <script src="script.js"></script>
 </body>
