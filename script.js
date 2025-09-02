@@ -1,6 +1,3 @@
-
-
-
 // --- BEGIN DATA ---
 const timeZones = [
   "Africa/Abidjan","Africa/Accra","Africa/Addis_Ababa","Africa/Algiers","Africa/Asmara","Africa/Asmera","Africa/Bamako","Africa/Bangui","Africa/Banjul","Africa/Bissau","Africa/Blantyre","Africa/Brazzaville","Africa/Bujumbura","Africa/Cairo","Africa/Casablanca","Africa/Ceuta","Africa/Conakry","Africa/Dakar","Africa/Dar_es_Salaam","Africa/Djibouti","Africa/Douala","Africa/El_Aaiun","Africa/Freetown","Africa/Gaborone","Africa/Harare","Africa/Johannesburg","Africa/Juba","Africa/Kampala","Africa/Khartoum","Africa/Kigali","Africa/Kinshasa","Africa/Lagos","Africa/Libreville","Africa/Lome","Africa/Luanda","Africa/Lubumbashi","Africa/Lusaka","Africa/Malabo","Africa/Maputo","Africa/Maseru","Africa/Mbabane","Africa/Mogadishu","Africa/Monrovia","Africa/Nairobi","Africa/Ndjamena","Africa/Niamey","Africa/Nouakchott","Africa/Ouagadougou","Africa/Porto-Novo","Africa/Sao_Tome","Africa/Timbuktu","Africa/Tripoli","Africa/Tunis","Africa/Windhoek",
@@ -49,10 +46,7 @@ function getOffsetString(tz, date = new Date()) {
   return parts ? parts.value : '';
 }
 
-// ========================
-// 2. STORAGE (LocalStorage)
-// ========================
-
+// === STORAGE (LocalStorage) ===
 const LS_KEY = 'neon-clocks';
 const LS_FAV = 'neon-favzones';
 const LS_THEME = 'neon-theme';
@@ -63,10 +57,7 @@ let favorites = JSON.parse(localStorage.getItem(LS_FAV) || '[]');
 let theme = localStorage.getItem(LS_THEME) || 'neon';
 let is12h = localStorage.getItem(LS_H12) === 'true';
 
-// ========================
-// 3. DOM ELEMENTS
-// ========================
-
+// === DOM ELEMENTS ===
 const tzSelect = document.getElementById('timezone-select');
 const addBtn = document.getElementById('add-clock-btn');
 const zoneSearch = document.getElementById('zone-search');
@@ -80,10 +71,7 @@ const importBtn = document.getElementById('import-btn');
 const copyright = document.getElementById('copyright');
 if (copyright) copyright.textContent = `© ${new Date().getFullYear()} Neon Clocks`;
 
-// ========================
-// 4. TIME ZONE SELECT WITH SEARCH & FAVORITES
-// ========================
-
+// === TIME ZONE SELECT WITH SEARCH & FAVORITES ===
 function filterZones(query) {
   query = (query || '').toLowerCase();
   return timeZones.filter(z => z.toLowerCase().includes(query));
@@ -101,10 +89,7 @@ function renderTZSelect() {
 }
 zoneSearch.addEventListener('input', renderTZSelect);
 
-// ========================
-// 5. FAVORITES STAR/UNSTAR
-// ========================
-
+// === FAVORITES STAR/UNSTAR ===
 function renderFavorites() {
   favDiv.innerHTML = '';
   favorites.forEach(z => {
@@ -133,10 +118,7 @@ tzSelect.addEventListener('dblclick', () => {
   }
 });
 
-// ========================
-// 6. CLOCKS: ADD, REMOVE, LABEL, ALARM, ANALOG/DIGITAL
-// ========================
-
+// === CLOCKS: ADD, REMOVE, LABEL, ALARM, ANALOG/DIGITAL ===
 function saveClocks() {
   localStorage.setItem(LS_KEY, JSON.stringify(clocks));
 }
@@ -197,10 +179,7 @@ function clearAlarm(id) {
   renderClocks();
 }
 
-// ========================
-// 7. CLOCKS: RENDER ALL
-// ========================
-
+// === CLOCKS: RENDER ALL ===
 function renderClocks() {
   clocksContainer.innerHTML = '';
   clocks.forEach(clock => {
@@ -255,13 +234,9 @@ window.setAlarm = setAlarm;
 window.clearAlarm = clearAlarm;
 window.removeClock = removeClock;
 
-// ========================
-// 8. WEATHER (Open-Meteo, basic demo)
-// ========================
-
+// === WEATHER (Open-Meteo, basic demo) ===
 const weatherCache = {};
 function fetchWeather(tz, id) {
-  // Demo: Use fixed lat/lon for a few cities. For full production, use a full TZ-to-city lookup.
   const cityCoords = {
     'Asia/Tokyo': [35.6895, 139.6917], 'Europe/London': [51.5072, -0.1276], 'America/New_York': [40.7128, -74.0060],
     'Europe/Paris': [48.8566, 2.3522], 'America/Chicago': [41.8781, -87.6298], 'Asia/Kolkata': [28.6139, 77.2090], 'Europe/Berlin': [52.5200, 13.4050],
@@ -283,10 +258,7 @@ function updateWeather(id, w) {
   if (el) el.textContent = txt;
 }
 
-// ========================
-// 9. ANALOG CLOCK RENDER
-// ========================
-
+// === ANALOG CLOCK RENDER ===
 function drawAnalog(tz, id) {
   const now = new Date();
   const h = +now.toLocaleString('en-US', { timeZone: tz, hour: '2-digit', hour12: false });
@@ -301,10 +273,7 @@ function drawAnalog(tz, id) {
   `;
 }
 
-// ========================
-// 10. CLOCKS LIVE UPDATE + ALARM NOTIFICATIONS
-// ========================
-
+// === CLOCKS LIVE UPDATE + ALARM NOTIFICATIONS ===
 function tick() {
   clocks.forEach(clock => {
     const now = new Date();
@@ -332,10 +301,7 @@ function tick() {
 }
 setInterval(tick, 1000);
 
-// ========================
-// 11. THEME AND 12/24h TOGGLE
-// ========================
-
+// === THEME AND 12/24h TOGGLE ===
 function applyTheme() {
   document.body.setAttribute('data-theme', theme);
   themeSel.value = theme;
@@ -354,10 +320,7 @@ h12Toggle.addEventListener('change', () => {
   renderClocks();
 });
 
-// ========================
-// 12. EXPORT/IMPORT
-// ========================
-
+// === EXPORT/IMPORT ===
 exportBtn.onclick = () => {
   const data = { clocks, favorites, theme, is12h };
   navigator.clipboard.writeText(JSON.stringify(data, null, 2));
@@ -385,10 +348,7 @@ importBtn.onclick = () => {
   };
 };
 
-// ========================
-// 13. MEETING PLANNER (BASIC EXAMPLE)
-// ========================
-
+// === MEETING PLANNER (BASIC EXAMPLE) ===
 meetingBtn.onclick = () => {
   const dialog = document.getElementById('meeting-dialog');
   dialog.showModal();
@@ -415,21 +375,18 @@ meetingBtn.onclick = () => {
   };
 };
 
-// ========================
-// 14. INITIAL RENDER
-// ========================
-
+// === INITIAL RENDER ===
 renderTZSelect();
 renderFavorites();
 renderClocks();
+
+// === HOOK UP "ADD CLOCK" BUTTON (CRITICAL!) ===
+addBtn.onclick = () => addClock(tzSelect.value);
 
 // Request notification permission for alarms
 if ('Notification' in window && Notification.permission !== 'granted') {
   Notification.requestPermission();
 }
 
-// ========================
-// 15. FUTURE EXPANSION POINTS
-// ========================
-// Cloud sync, calendar API, world map, widget mode, offline PWA, multi-language, accessibility, etc.
-// Add these as your project grows!
+// === For expansion: PWA, map, calendar, etc ===
+// (add as needed)
